@@ -1,0 +1,9 @@
+﻿<Application x:Class="nibm222comp_E_Hotel_accomodation_system.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:nibm222comp_E_Hotel_accomodation_system"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
