@@ -5,8 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:nibm222comp_E_Hotel_accomodation_system"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Login" Height="832" Width="1282">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="800"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0">
+            <UniformGrid>
+                <Image Source="/valeriia-bugaiova-_pPHgeHz1uk-unsplash 1.png" Stretch="Uniform" Height="832" Width="1282"/>
+            </UniformGrid>
+        </Border>
+        <Grid Grid.Column="1" Margin="5,48,5,-38">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
+
+            <Image Source="/Logo.png"
+            HorizontalAlignment="Center" Margin="0,88,0,334" Height="300" Width="200" Grid.RowSpan="2" Panel.ZIndex="19" OpacityMask="Black"/>
+            <Image Source="/Name.png"
+           HorizontalAlignment="Left" Margin="142,150,0,245" Height="200" Width="200" Grid.RowSpan="2" Panel.ZIndex="19" OpacityMask="Black"/>
+
+
+            <TextBlock  Grid.Row="1"  Text="Username" Margin="38,94,0,263" HorizontalAlignment="Left" FontSize="20" FontStyle="Normal" FontWeight="Regular"/>
+            <TextBox x:Name="Username" Grid.Row="1" Width="383" HorizontalAlignment="Left" Margin="29,130,0,226" SelectionOpacity="-4" FontSize="18" FontFamily="Segoe UI" TextChanged="Username_TextChanged"  Background="White" UndoLimit="10" RenderTransformOrigin="0.5,0.5" BorderBrush="#FF030510" Cursor="Hand">
+                <TextBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="9"/>
+                    </TransformGroup>
+                </TextBox.RenderTransform>
+            </TextBox>
+
+
+            <TextBlock Grid.Row="1" Text="Password" Margin="38,179,0,178" HorizontalAlignment="Left" RenderTransformOrigin="0.383,-0.406" FontSize="20" FontStyle="Normal" FontWeight="Regular"/>
+            <PasswordBox x:Name="Password" Grid.Row="1" Width="381" HorizontalAlignment="Left" Margin="38,211,0,147" Cursor="Hand" SelectionOpacity="-4"  AutomationProperties.Name="Enter Password" BorderBrush="#FF030510"/>
+
+            <Button Grid.Row="1" Content="Login" FontSize="20" Width="340" Height="51" HorizontalAlignment="Left" Margin="58,312,0,21" Background="#337CF5" Foreground="White" BorderBrush="#337CF5" Panel.ZIndex="5"  Click="Button_Click"/>
+            <TextBlock Text="Forget Password?" HorizontalAlignment="Left" Margin="273,242,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.993,0.694" FontSize="18" FontWeight="Bold" Foreground="#FF435EBB" Cursor="Hand" />
+
+
+        </Grid>
     </Grid>
+
 </Window>
