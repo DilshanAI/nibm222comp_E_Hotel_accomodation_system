@@ -48,9 +48,13 @@ namespace nibm222comp_E_Hotel_accomodation_system
                     if (count == 1)
                     {
 
-                        MessageBox.Show("Login successful!");
-                   
-                       
+                    
+
+                        Dashboard dashboard = new Dashboard();
+                        dashboard.Show();
+                        this.Close();
+
+
                     }
                     else
                     {
