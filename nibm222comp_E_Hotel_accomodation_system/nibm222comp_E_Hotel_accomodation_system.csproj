@@ -8,4 +8,51 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Black &amp; Blue Minimalist Modern Initial Font Logo 1.png" />
+    <None Remove="Black &amp; Blue Minimalist Modern Initial Font Logo 12.png" />
+    <None Remove="Country House - Copy.png" />
+    <None Remove="Country House.png" />
+    <None Remove="Customer - Copy.png" />
+    <None Remove="Customer.png" />
+    <None Remove="Dashboardcontentimage.jpg" />
+    <None Remove="Document.png" />
+    <None Remove="Ellipse 17.png" />
+    <None Remove="Expand Arrow.png" />
+    <None Remove="Group 28.png" />
+    <None Remove="Mainwindow image%27.png" />
+    <None Remove="Performance Macbook.png" />
+    <None Remove="RIVER GREEN Hotel Accomodation System.png" />
+    <None Remove="RIVER GREEN Hotel Accomodation System12.png" />
+    <None Remove="Sell Stock.png" />
+    <None Remove="Sign in Button12.png" />
+    <None Remove="Submit.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Black &amp; Blue Minimalist Modern Initial Font Logo 1.png" />
+    <Resource Include="Black &amp; Blue Minimalist Modern Initial Font Logo 12.png" />
+    <Resource Include="Country House - Copy.png" />
+    <Resource Include="Country House.png" />
+    <Resource Include="Customer - Copy.png" />
+    <Resource Include="Customer.png" />
+    <Resource Include="Dashboardcontentimage.jpg" />
+    <Resource Include="Document.png" />
+    <Resource Include="Ellipse 17.png" />
+    <Resource Include="Expand Arrow.png" />
+    <Resource Include="Group 28.png" />
+    <Resource Include="Mainwindow image'.png" />
+    <Resource Include="Performance Macbook.png" />
+    <Resource Include="RIVER GREEN Hotel Accomodation System.png" />
+    <Resource Include="RIVER GREEN Hotel Accomodation System12.png" />
+    <Resource Include="Sell Stock.png" />
+    <Resource Include="Sign in Button12.png" />
+    <Resource Include="Submit.png" />
+  </ItemGroup>
+
 </Project>
