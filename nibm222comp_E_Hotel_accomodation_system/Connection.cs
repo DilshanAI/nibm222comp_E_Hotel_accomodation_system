@@ -16,7 +16,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
 
 
         public static readonly string ConnectionString =
-    @"Data Source=PAVITHRA432;Initial Catalog=HotelAccomodationSystem;Integrated Security=True;TrustServerCertificate=True";
+    @"Data Source=DESKTOP-KG96SMV;Initial Catalog=HotelAccomodationSystem;Integrated Security=True;TrustServerCertificate=True";
 
 
         public Connection() // Default Constructor
