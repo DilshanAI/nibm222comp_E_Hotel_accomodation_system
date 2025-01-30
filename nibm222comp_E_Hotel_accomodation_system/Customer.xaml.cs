@@ -30,8 +30,40 @@ namespace nibm222comp_E_Hotel_accomodation_system
         public Customer()
         {
             InitializeComponent();
+            LoadCustomerDetails();
         }
+        private void LoadCustomerDetails()
+        {
+            try
+            {
+                sqlcon.Open();
 
+                // SQL query to fetch all room details
+                string query = "SELECT CustomeRID, CusName, C_Address, CusNic, Cus_Tele,Cemail,BirthOfDate,CreateDate FROM Customer";
+                SqlCommand cmd = new SqlCommand(query, sqlcon);
+
+                // Use SqlDataAdapter to fill the DataTable
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable dataTable = new DataTable();
+
+                adapter.Fill(dataTable);
+
+                // Bind the data to the DataGrid
+                dgCustomerDetails.ItemsSource = dataTable.DefaultView;
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                sqlcon.Close();
+            }
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string CustomerID = txtUpdateCusId.Text.Trim();
@@ -235,14 +267,56 @@ namespace nibm222comp_E_Hotel_accomodation_system
             }
         }
 
-        private void Search2_Click(object sender, RoutedEventArgs e)
+        private void Searchcustomer2_Click(object sender, RoutedEventArgs e)
         {
+     
+            string cusID = txtSearchcustomer2.Text.Trim();
 
-        }
+            if (string.IsNullOrEmpty(cusID))
+            {
+                MessageBox.Show("Please enter a Customer ID to search.", "Search Customer", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-        private void Search2_Click_1(object sender, RoutedEventArgs e)
-        {
+            try
+            {
+                sqlcon.Open();
 
+                // Query to search for the Room ID
+                string query = "SELECT CustomeRID, CusName, C_Address, CusNic, Cus_Tele,Cemail,BirthOfDate,CreateDate FROM Customer WHERE CustomeRID = @CustomeRID";
+                SqlCommand cmd = new SqlCommand(query, sqlcon);
+                cmd.Parameters.AddWithValue("@CustomeRID", cusID);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable dataTable = new DataTable();
+
+                adapter.Fill(dataTable);
+
+                if (dataTable.Rows.Count > 0)
+                {
+                   
+                    dgCustomerDetails.ItemsSource = dataTable.DefaultView;
+                }
+                else
+                {
+                 
+                    MessageBox.Show("Customer ID does not exist.", "Search Customer", MessageBoxButton.OK, MessageBoxImage.Information);
+                    dgCustomerDetails.ItemsSource = null; 
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                sqlcon.Close();
+            }
         }
     }
+    
 }
