@@ -126,7 +126,7 @@
                         <TextBox x:Name="txtSearchcustomer2" Width="260" Height="30" Margin="0,0,10,0" 
        FontSize="14" BorderBrush="#D1D1D1" BorderThickness="1" />
                         <Button x:Name="Searchcustomer2" Content="Search" Width="80" Height="30" Background="#FF337CF5" Foreground="White" 
-      FontWeight="Bold" BorderThickness="0" Click="Search2_Click_1" />
+      FontWeight="Bold" BorderThickness="0" Click="Searchcustomer2_Click" />
                     </StackPanel>
 
 
