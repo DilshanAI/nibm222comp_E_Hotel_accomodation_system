@@ -42,35 +42,35 @@ namespace nibm222comp_E_Hotel_accomodation_system
 
         private void LoadRoomDetails()
         {
-            //try
-            //{
-            //    sqlcon.Open();
+            try
+            {
+                sqlcon.Open();
 
-            //    // SQL query to fetch all room details
-            //    string query = "SELECT RoomID, RoomType, BedType, Price, CreateDate FROM Room";
-            //    SqlCommand cmd = new SqlCommand(query, sqlcon);
+                // SQL query to fetch all room details
+                string query = "SELECT RoomID, RoomType, BedType, Price, CreateDate FROM Room";
+                SqlCommand cmd = new SqlCommand(query, sqlcon);
 
-            //    // Use SqlDataAdapter to fill the DataTable
-            //    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            //    DataTable dataTable = new DataTable();
+                // Use SqlDataAdapter to fill the DataTable
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable dataTable = new DataTable();
 
-            //    adapter.Fill(dataTable);
+                adapter.Fill(dataTable);
 
-            //    // Bind the data to the DataGrid
-            //    dgRoomDetails.ItemsSource = dataTable.DefaultView;
-            //}
-            //catch (SqlException ex)
-            //{
-            //    MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-            //finally
-            //{
-            //    sqlcon.Close();
-            //}
+                // Bind the data to the DataGrid
+                dgRoomDetails.ItemsSource = dataTable.DefaultView;
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                sqlcon.Close();
+            }
         }
 
         private void LoadData()
@@ -410,52 +410,52 @@ namespace nibm222comp_E_Hotel_accomodation_system
 
         private void SearchButton2_Click(object sender, RoutedEventArgs e)
         {
-            //string roomID = txtSearch2.Text.Trim();
+            string roomID = txtSearch2.Text.Trim();
 
-            //if (string.IsNullOrEmpty(roomID))
-            //{
-            //    MessageBox.Show("Please enter a Room ID to search.", "Search Room", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    return;
-            //}
+            if (string.IsNullOrEmpty(roomID))
+            {
+                MessageBox.Show("Please enter a Room ID to search.", "Search Room", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            //try
-            //{
-            //    sqlcon.Open();
+            try
+            {
+                sqlcon.Open();
 
-            //    // Query to search for the Room ID
-            //    string query = "SELECT RoomID, RoomType, BedType, Price, CreateDate FROM Room WHERE RoomID = @RoomID";
-            //    SqlCommand cmd = new SqlCommand(query, sqlcon);
-            //    cmd.Parameters.AddWithValue("@RoomID", roomID);
+                // Query to search for the Room ID
+                string query = "SELECT RoomID, RoomType, BedType, Price, CreateDate FROM Room WHERE RoomID = @RoomID";
+                SqlCommand cmd = new SqlCommand(query, sqlcon);
+                cmd.Parameters.AddWithValue("@RoomID", roomID);
 
-            //    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            //    DataTable dataTable = new DataTable();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable dataTable = new DataTable();
 
-            //    adapter.Fill(dataTable);
+                adapter.Fill(dataTable);
 
-            //    if (dataTable.Rows.Count > 0)
-            //    {
-            //        // Room ID exists, load data into DataGrid
-            //        dgRoomDetails.ItemsSource = dataTable.DefaultView;
-            //    }
-            //    else
-            //    {
-            //        // Room ID does not exist
-            //        MessageBox.Show("Room ID does not exist.", "Search Room", MessageBoxButton.OK, MessageBoxImage.Information);
-            //        dgRoomDetails.ItemsSource = null; // Clear DataGrid if no results
-            //    }
-            //}
-            //catch (SqlException ex)
-            //{
-            //    MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-            //finally
-            //{
-            //    sqlcon.Close();
-            //}
+                if (dataTable.Rows.Count > 0)
+                {
+                    // Room ID exists, load data into DataGrid
+                    dgRoomDetails.ItemsSource = dataTable.DefaultView;
+                }
+                else
+                {
+                    // Room ID does not exist
+                    MessageBox.Show("Room ID does not exist.", "Search Room", MessageBoxButton.OK, MessageBoxImage.Information);
+                    dgRoomDetails.ItemsSource = null; // Clear DataGrid if no results
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                sqlcon.Close();
+            }
         }
 
         //private void ClearUpdateFields()
