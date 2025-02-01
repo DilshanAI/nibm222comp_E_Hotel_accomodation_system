@@ -73,5 +73,21 @@ No_Person int,
 CusID VARCHAR(10) Foreign Key  References Customer(CustomerID),
 RoID VARCHAR(10) Foreign Key  References Room(RoomID));
 
+CREATE TABLE Designation (
+    D_ID VARCHAR(10) PRIMARY KEY,
+    Description VARCHAR(30)
+);
 
-			
+CREATE TABLE Employee (
+    EmployeeID VARCHAR(10) PRIMARY KEY,
+    Name VARCHAR(30),
+    Mobile varchar(12) not null,
+    NIC char(10) not null,
+    Address varchar(50) not null,
+	Email varchar(50) not null,
+    CreateDate DATE,
+	UpdateDate DATE
+);		
+
+ALTER TABLE Employee
+ADD Designation varchar(50) not null;
