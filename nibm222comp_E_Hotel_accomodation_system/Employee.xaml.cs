@@ -46,7 +46,8 @@ namespace nibm222comp_E_Hotel_accomodation_system
                 string nic = txtNIC.Text.Trim();
                 string address = txtAddress.Text.Trim();
                 string email = txtemail.Text.Trim();
-                string designation = designationComboBox.Text;
+                string designation = (designationComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+
 
 
                 if (string.IsNullOrEmpty(employeeId) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(mobile) || string.IsNullOrEmpty(nic) || string.IsNullOrEmpty(address) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(designation))
@@ -108,6 +109,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
                 sqlcon.Close();
             }
         }
+        
         private void clearFiled()
         {
             txtempId.Text = "";
@@ -127,15 +129,23 @@ namespace nibm222comp_E_Hotel_accomodation_system
             string updateMobile = txtUpdatemobile.Text.Trim();
             string updateNIC = txtUpdatenic.Text.Trim();
             string updateEmail = txtUpdateemail.Text.Trim();
-            string updateDesignation = designationComboBox.Text.Trim();
+            //string updateDesignation = designationComboBox.Text.Trim();
+            string updateDesignation = (designationComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
 
+            if (string.IsNullOrWhiteSpace(updateEmpID))
+            {
+                MessageBox.Show("Please enter an Employee ID.", "Update Employee", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             try
             {
                 sqlcon.Open();
+
+                // Check if EmployeeID exists
                 string empquery = "SELECT COUNT(1) FROM Employee WHERE EmployeeID = @EmployeeID";
                 SqlCommand checkCmd = new SqlCommand(empquery, sqlcon);
-                checkCmd.Parameters.AddWithValue("@CustomeRID", updateEmpID);
+                checkCmd.Parameters.AddWithValue("@EmployeeID", updateEmpID);
 
                 int exists = Convert.ToInt32(checkCmd.ExecuteScalar());
 
@@ -145,15 +155,26 @@ namespace nibm222comp_E_Hotel_accomodation_system
                     return;
                 }
 
-                string updateQuery = "UPDATE Employee SET Name = @Name, Mobile = @Mobile, NIC = @NIC,  Address = @Address, Email = @Email, UpdateDate = @UpdateDate , Designation = @Designation WHERE EmployeeID = @EmployeeID";
+                // Corrected UPDATE query with properly mapped parameters
+                string updateQuery = @"UPDATE Employee 
+                          SET Name = @Name, 
+                              Mobile = @Mobile, 
+                              NIC = @NIC,  
+                              Address = @Address, 
+                              Email = @Email, 
+                              UpdateDate = @UpdateDate, 
+                              Designation = @Designation 
+                          WHERE EmployeeID = @EmployeeID";
+
                 SqlCommand updateCmd = new SqlCommand(updateQuery, sqlcon);
                 updateCmd.Parameters.AddWithValue("@Name", updateName);
-                updateCmd.Parameters.AddWithValue("@Mobile", updateAddress);
-                updateCmd.Parameters.AddWithValue("@NIC", updateMobile);
-                updateCmd.Parameters.AddWithValue("@Address", updateNIC);
+                updateCmd.Parameters.AddWithValue("@Mobile", updateMobile);
+                updateCmd.Parameters.AddWithValue("@NIC", updateNIC);
+                updateCmd.Parameters.AddWithValue("@Address", updateAddress);
                 updateCmd.Parameters.AddWithValue("@Email", updateEmail);
                 updateCmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
-                updateCmd.Parameters.AddWithValue("@Designation", designationComboBox);
+                updateCmd.Parameters.AddWithValue("@Designation", updateDesignation);
+                updateCmd.Parameters.AddWithValue("@EmployeeID", updateEmpID); // Missing in original
 
                 int rowsAffected = updateCmd.ExecuteNonQuery();
 
@@ -177,7 +198,8 @@ namespace nibm222comp_E_Hotel_accomodation_system
             }
             finally
             {
-                sqlcon.Close();
+                if (sqlcon.State == ConnectionState.Open)
+                    sqlcon.Close();
             }
         }
         private void ClearUpdateFields()
