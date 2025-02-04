@@ -235,6 +235,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
             finally
             {
                 sqlcon.Close();
+                LoadRoomDetails();
             }
         }
         private bool IsValidRoomId(string roomId)
@@ -248,13 +249,21 @@ namespace nibm222comp_E_Hotel_accomodation_system
             cmbRoomType.Items.Clear();
             cmbBedType.Items.Clear();
 
-            // Add default placeholder option
+            // Reset Inventory Type
+            cmbRoomType.Items.Clear();
             cmbRoomType.Items.Add("-- Select --");
-            cmbBedType.Items.Add("-- Select --");
+            cmbRoomType.Items.Add("Single");
+            cmbRoomType.Items.Add("Double");
+            cmbRoomType.Items.Add("Suite");
+            cmbRoomType.SelectedIndex = 0; // Set default selection
 
-            // Reset the selected index to show the default placeholder
-            cmbRoomType.SelectedIndex = 0;
-            cmbBedType.SelectedIndex = 0;
+            cmbBedType.Items.Clear();
+            cmbBedType.Items.Add("-- Select --");
+            cmbBedType.Items.Add("Queen");
+            cmbBedType.Items.Add("King");
+            cmbBedType.SelectedIndex = 0; // Set default selection
+
+
 
             txtRoomId.Text = "";
             txtPrice.Text = "";
@@ -346,6 +355,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
             finally
             {
                 sqlcon.Close();
+                LoadRoomDetails();
             }
 
         }
