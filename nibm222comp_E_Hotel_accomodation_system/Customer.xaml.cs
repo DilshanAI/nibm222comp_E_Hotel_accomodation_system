@@ -39,7 +39,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
                 sqlcon.Open();
 
                 // SQL query to fetch all room details
-                string query = "SELECT CustomeRID, CusName, C_Address, CusNic, Cus_Tele,Cemail,BirthOfDate,CreateDate FROM Customer";
+                string query = "SELECT CustomeRID, CusName, C_Address, CusNic, Cus_Tele,Cemail,CreateDate FROM Customer";
                 SqlCommand cmd = new SqlCommand(query, sqlcon);
 
                 // Use SqlDataAdapter to fill the DataTable
@@ -77,7 +77,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
             try
             {
                 sqlcon.Open();
-                string query = "SELECT CusName,C_Address, Cus_Tele,CusNic,Cemail,BirthOfDate FROM Customer WHERE CustomeRID = @CustomeRID";
+                string query = "SELECT CusName,C_Address, Cus_Tele,CusNic,Cemail FROM Customer WHERE CustomeRID = @CustomeRID";
                 SqlCommand cmd = new SqlCommand(query, sqlcon);
                 cmd.Parameters.AddWithValue("@CustomeRID", CustomerID);
 
@@ -90,7 +90,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
                     txtUpdatemobile.Text = reader["Cus_Tele"].ToString();
                     txtUpdatenic.Text = reader["CusNic"].ToString();
                     txtUpdateemail.Text = reader["Cemail"].ToString();
-                    datePickerDOB.Text = reader["BirthOfDate"].ToString();
+                    //datePickerDOB.Text = reader["BirthOfDate"].ToString();
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
             txtmobile.Text = "";
             txtnic.Text = "";
             txtemail.Text = "";
-            datePickerDOB.Text = "";
+      
         }
    
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -130,7 +130,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
             string updateMobile = txtUpdatemobile.Text.Trim();
             string updateNIC = txtUpdatenic.Text.Trim();
             string updateEmail = txtUpdateemail.Text.Trim();
-            string updateDOB = datePickerDOB.Text.Trim();
+    
 
 
             try
@@ -148,14 +148,14 @@ namespace nibm222comp_E_Hotel_accomodation_system
                     return;
                 }
 
-                string updateQuery = "UPDATE Customer SET CusName = @CusName, C_Address = @C_Address, Cus_Tele = @Cus_Tele,  CusNic = @CusNic, Cemail = @Cemail, BirthOfDate = @BirthOfDate, UpdateDate = @UpdateDate WHERE CustomeRID = @CustomeRID";
+                string updateQuery = "UPDATE Customer SET CusName = @CusName, C_Address = @C_Address, Cus_Tele = @Cus_Tele,  CusNic = @CusNic, Cemail = @Cemail,  UpdateDate = @UpdateDate WHERE CustomeRID = @CustomeRID";
                 SqlCommand updateCmd = new SqlCommand(updateQuery, sqlcon);
                 updateCmd.Parameters.AddWithValue("@CusName", updateName);
                 updateCmd.Parameters.AddWithValue("@C_Address", updateAddress);
                 updateCmd.Parameters.AddWithValue("@Cus_Tele", updateMobile);
                 updateCmd.Parameters.AddWithValue("@CusNic", updateNIC);
                 updateCmd.Parameters.AddWithValue("@Cemail", updateEmail);
-                updateCmd.Parameters.AddWithValue("@BirthOfDate", UpdatedatePickerDOB);
+                //updateCmd.Parameters.AddWithValue("@BirthOfDate", UpdatedatePickerDOB);
                 updateCmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
 
                 int rowsAffected = updateCmd.ExecuteNonQuery();
@@ -190,7 +190,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
             txtUpdatemobile.Text = "";
             txtUpdatenic.Text = "";
             txtUpdateemail.Text = "";
-            datePickerDOB.Text = "";
+         
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -205,9 +205,9 @@ namespace nibm222comp_E_Hotel_accomodation_system
                 string nic = txtnic.Text.Trim();
                 string address = txtAddress.Text.Trim();
                 string email = txtemail.Text.Trim();
-                string dob = datePickerDOB.Text.Trim();
+            
 
-                if (string.IsNullOrEmpty(customerId) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(mobile) || string.IsNullOrEmpty(nic) || string.IsNullOrEmpty(address) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(dob))
+                if (string.IsNullOrEmpty(customerId) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(mobile) || string.IsNullOrEmpty(nic) || string.IsNullOrEmpty(address) || string.IsNullOrEmpty(email) )
                 {
                     MessageBox.Show("Please fill all fields", "Customer Details", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
@@ -227,7 +227,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
                         return;
                     }
 
-                    string query = "INSERT INTO Customer (CustomeRID, CusName, Cus_Tele, CusNic, C_Address, Cemail,BirthOfDate,CreateDate,UpdateDate) VALUES (@CustomeRID, @CusName, @Cus_Tele, @CusNic, @C_Address,@Cemail, @BirthOfDate,@CreateDate,@UpdateDate)";
+                    string query = "INSERT INTO Customer (CustomeRID, CusName, Cus_Tele, CusNic, C_Address, Cemail,CreateDate,UpdateDate) VALUES (@CustomeRID, @CusName, @Cus_Tele, @CusNic, @C_Address,@Cemail,@CreateDate,@UpdateDate)";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlcon);
 
                     sqlCmd.Parameters.AddWithValue("@CustomeRID", customerId);
@@ -236,7 +236,6 @@ namespace nibm222comp_E_Hotel_accomodation_system
                     sqlCmd.Parameters.AddWithValue("@CusNic", nic);
                     sqlCmd.Parameters.AddWithValue("@C_Address", address);
                     sqlCmd.Parameters.AddWithValue("@Cemail", email);
-                    sqlCmd.Parameters.AddWithValue("@BirthOfDate", dob);
                     sqlCmd.Parameters.AddWithValue("@CreateDate", DateTime.Now);
                     sqlCmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
 
@@ -283,7 +282,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
                 sqlcon.Open();
 
                 // Query to search for the Room ID
-                string query = "SELECT CustomeRID, CusName, C_Address, CusNic, Cus_Tele,Cemail,BirthOfDate,CreateDate FROM Customer WHERE CustomeRID = @CustomeRID";
+                string query = "SELECT CustomeRID, CusName, C_Address, CusNic, Cus_Tele,Cemail,CreateDate FROM Customer WHERE CustomeRID = @CustomeRID";
                 SqlCommand cmd = new SqlCommand(query, sqlcon);
                 cmd.Parameters.AddWithValue("@CustomeRID", cusID);
 
