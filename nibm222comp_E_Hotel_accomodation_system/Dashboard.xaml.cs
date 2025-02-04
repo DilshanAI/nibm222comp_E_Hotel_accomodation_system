@@ -23,6 +23,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
         {
             InitializeComponent();
             ContentArea.Content = new Dashboard_Content();
+
         }
 
         private void rooms_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -47,7 +48,27 @@ namespace nibm222comp_E_Hotel_accomodation_system
 
         private void inventories_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ContentArea.Content = new Inventory();
+            LoadInventoryPage();
+        }
+
+        private void LoadInventoryPage()
+        {
+            Inventory inventoryPage = new Inventory();
+
+            // Subscribe to the event for navigating to InventoryDetails.xaml
+            inventoryPage.NavigateToInventoryDetails += LoadInventoryDetailsPage;
+
+            ContentArea.Content = inventoryPage;
+        }
+
+        private void LoadInventoryDetailsPage()
+        {
+            InventoryDetails detailsPage = new InventoryDetails();
+
+            // Subscribe to event to go back to Inventory.xaml
+            detailsPage.NavigateBackToInventory += LoadInventoryPage;
+
+            ContentArea.Content = detailsPage;
         }
 
         private void reports_MouseDoubleClick(object sender, MouseButtonEventArgs e)
