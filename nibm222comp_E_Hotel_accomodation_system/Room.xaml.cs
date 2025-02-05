@@ -252,9 +252,11 @@ namespace nibm222comp_E_Hotel_accomodation_system
             // Reset Inventory Type
             cmbRoomType.Items.Clear();
             cmbRoomType.Items.Add("-- Select --");
-            cmbRoomType.Items.Add("Single");
-            cmbRoomType.Items.Add("Double");
-            cmbRoomType.Items.Add("Suite");
+            cmbRoomType.Items.Add("AC-Single");
+            cmbRoomType.Items.Add("NONAC-Single");
+            cmbRoomType.Items.Add("AC-Double");
+            cmbRoomType.Items.Add("NONAC-Double");
+            cmbRoomType.Items.Add("AC-Suite");
             cmbRoomType.SelectedIndex = 0; // Set default selection
 
             cmbBedType.Items.Clear();

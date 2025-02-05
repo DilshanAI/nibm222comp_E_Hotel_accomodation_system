@@ -34,19 +34,19 @@ namespace nibm222comp_E_Hotel_accomodation_system
             string username = Username.Text;
             string password = Password.Password;
 
-            if (IsValidPassword(password))
-            {
-                try
-                {
-                    sqlcon.Open();
-                    string query = "SELECT COUNT(1) FROM Login WHERE Username=@Username AND Password=@Password";
-                    SqlCommand sqlCmd = new SqlCommand(query, sqlcon);
-                    sqlCmd.Parameters.AddWithValue("@Username", username);
-                    sqlCmd.Parameters.AddWithValue("@Password", password);
-                    int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+            //if (IsValidPassword(password))
+            //{
+            //    try
+            //    {
+            //        sqlcon.Open();
+            //        string query = "SELECT COUNT(1) FROM Login WHERE Username=@Username AND Password=@Password";
+            //        SqlCommand sqlCmd = new SqlCommand(query, sqlcon);
+            //        sqlCmd.Parameters.AddWithValue("@Username", username);
+            //        sqlCmd.Parameters.AddWithValue("@Password", password);
+            //        int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
 
-                    if (count == 1)
-                    {
+            //        if (count == 1)
+            //        {
 
                     
 
@@ -55,25 +55,25 @@ namespace nibm222comp_E_Hotel_accomodation_system
                         this.Close();
 
 
-                    }
-                    else
-                    {
-                        MessageBox.Show("Username or password is incorrect.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    sqlcon.Close();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Invalid email format or password length.");
-            }
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Username or password is incorrect.");
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message);
+            //    }
+            //    finally
+            //    {
+            //        sqlcon.Close();
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Invalid email format or password length.");
+            //}
         }
   
 

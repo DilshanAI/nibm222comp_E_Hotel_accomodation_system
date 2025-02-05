@@ -8,38 +8,33 @@
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
 
     <Grid Background="#191C3281">
-        <Border BorderThickness="1" HorizontalAlignment="Left" Height="477" Margin="42,28,0,0" VerticalAlignment="Top" Width="711" Background="White" CornerRadius="10,10,10,10">
-            <Button x:Name="Btn_back" Content="Button" HorizontalAlignment="Left" Height="27" Margin="564,21,0,0" VerticalAlignment="Top" Width="69" Click="Btn_back_Click"/>
+        <Border BorderThickness="1" HorizontalAlignment="Left" Height="477" Margin="42,28,0,0" VerticalAlignment="Top" Width="894" Background="White" CornerRadius="10,10,10,10">
+            <Button x:Name="Btn_back" Content="&lt;&lt; Back" HorizontalAlignment="Left" Height="27" Margin="754,37,0,0" VerticalAlignment="Top" Width="69" Click="Btn_back_Click" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Segoe UI Semibold" FontSize="14"/>
         </Border>
 
         <!-- Label for Room Details -->
-        <TextBlock Text="Room Details" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI" 
+        <TextBlock Text="Inventory Details" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI" 
            VerticalAlignment="Top" HorizontalAlignment="Left" Margin="94,64,0,0" />
 
+       
         <!-- Search bar and button -->
-        <StackPanel Orientation="Horizontal"  />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="250,110,0,0" VerticalAlignment="Top">
+            <TextBox x:Name="txtSearch" Width="200" Height="30" FontSize="14" />
+            <Button x:Name="btnSearch" Content="Search" Width="80" Height="30" 
+                    Margin="10,0,0,0" Background="#3B82F6" Foreground="White" Click="btnSearch_Click_1" />
+        </StackPanel>
 
-        <!-- Data Grid for Room Details -->
-        <!--<DataGrid Name="dgRoomDetails" Grid.Row="1" AutoGenerateColumns="False" HeadersVisibility="Column" 
-          IsReadOnly="True" Background="White" BorderThickness="0" RowBackground="White" 
-          AlternatingRowBackground="#F9F9F9" HorizontalGridLinesBrush="#D1D1D1" 
-          VerticalGridLinesBrush="#D1D1D1" FontSize="12" FontFamily="Segoe UI" Margin="0,22,0,9">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Room ID" Binding="{Binding RoomID}" Width="*" />
-                <DataGridTextColumn Header="Room Type" Binding="{Binding RoomType}" Width="*" />
-                <DataGridTextColumn Header="Bed Type" Binding="{Binding BedType}" Width="*" />
-                <DataGridTextColumn Header="Price (Rs.)" Binding="{Binding Price}" Width="*" />
-                <DataGridTextColumn Header="Create Date" Binding="{Binding CreateDate}" Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>-->
+       
 
-        <DataGrid Name="dgRoomDetails" AutoGenerateColumns="False" Margin="79,176,131,49">
+        <DataGrid Name="dgInventoryDetails" AutoGenerateColumns="False" Margin="79,176,94,39">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Inventory ID" Binding="{Binding InventoryID}" Width="*" />
                 <DataGridTextColumn Header="Room ID" Binding="{Binding RoomID}" Width="*" />
-                <DataGridTextColumn Header="Room Type" Binding="{Binding RoomType}" Width="*" />
-                <DataGridTextColumn Header="Bed Type" Binding="{Binding BedType}" Width="*" />
-                <DataGridTextColumn Header="Price (Rs.)" Binding="{Binding Price}" Width="*" />
+                <DataGridTextColumn Header="Inventory Name" Binding="{Binding InventoryName}" Width="*" />
+                <DataGridTextColumn Header="Inventory Type" Binding="{Binding InventoryType}" Width="*" />
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="60" />
                 <DataGridTextColumn Header="Create Date" Binding="{Binding CreateDate}" Width="*" />
+                <DataGridTextColumn Header="Updated Date" Binding="{Binding UpdatedDate}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
 

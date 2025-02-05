@@ -3,6 +3,7 @@ CREATE DATABASE HotelAccomodationSystem;
 
 Use HotelAccomodationSystem;
 
+drop database HotelAccomodationSystem;
 -------------------------------------------------------------------------------------------------------
 
 --Login--
@@ -16,7 +17,7 @@ INSERT INTO Login (ID, Username, Password)
 VALUES ('1', 'HASNIBM222', 'HAS22222');
 
 ----------------------------------------------------------------------------------------------------------
-
+Drop table room;
 --Room--
 CREATE TABLE Room (
     RoomID VARCHAR(10) PRIMARY KEY,
@@ -26,13 +27,19 @@ CREATE TABLE Room (
     CreateDate DATE,
 	UpdatedDate DATE NULL
 );
-
-
+SELECT DISTINCT RoomID FROM Room WHERE RoomType = @RoomType AND BedType = @BedType
 INSERT INTO Room (RoomID, RoomType, BedType, Price, CreateDate, UpdatedDate)
 VALUES 
-('R001', 'Single', 'Queen', 100.00, '2024-05-31', '2024-05-31'),
-('R002', 'Double', 'King', 150.00, '2024-05-31','2024-05-31'),
-('R003', 'Suite', 'King', 250.00, '2024-05-31','2024-05-31');
+('R001', 'AC-Single', 'Queen', 2000.00, '2024-05-31', '2024-05-31'),
+('R002', 'AC-Single', 'Queen', 2000.00, '2024-05-31', '2024-05-31'),
+('R003', 'NONAC-Single', 'Queen', 1500.00, '2024-05-31', '2024-05-31'),
+('R004', 'NONAC-Single', 'Queen', 1500.00, '2024-05-31', '2024-05-31'),
+('R005', 'AC-Double', 'King', 2500.00, '2024-05-31','2024-05-31'),
+('R006', 'AC-Double', 'King', 2500.00, '2024-05-31','2024-05-31'),
+('R007', 'NONAC-Double', 'King', 2200.00, '2024-05-31','2024-05-31'),
+('R008', 'NONAC-Double', 'King', 2200.00, '2024-05-31','2024-05-31'),
+('R009', 'AC-Suite', 'King', 3000.00, '2024-05-31','2024-05-31'),
+('R010', 'AC-Suite', 'King', 3000.00, '2024-05-31','2024-05-31');
 
 ----------------------------------------------------------------------------------------------------------------
 
@@ -92,6 +99,8 @@ CREATE TABLE Inventory (
     UpdatedDate DATE NULL, 
     FOREIGN KEY (RoomID) REFERENCES Room(RoomID)  
 );
+
+SELECT InventoryID,RoomID,InventoryName,InventoryType,Quantity,CreateDate,UpdatedDate FROM Inventory;
 select * from Inventory;
 
 INSERT INTO Inventory (InventoryID,RoomID, InventoryName, InventoryType, Quantity, CreateDate, UpdatedDate)
@@ -104,17 +113,26 @@ VALUES
 
 
 --------------------------------------------------------------------------------------------------------------
-
+Drop table reservation;
 
 create table Reservation
 (ReID varchar(10) primary key ,
 Re_date Date,
 check_in Date,
 check_out Date,
-Remarks varchar(20),
+Remarks varchar(20) null,
 No_Person int,
 CusID VARCHAR(10) Foreign Key  References Customer(CustomerID),
 RoID VARCHAR(10) Foreign Key  References Room(RoomID));
+select * from reservation;
+
+INSERT INTO Reservation (ReID, Re_date, check_in, check_out, Remarks, No_Person, CusID, RoID)
+VALUES 
+('B001', '2024-06-01', '2024-06-05', '2024-06-10', 'Honeymoon', 2, 'C001', 'R005'),
+('B002', '2024-06-02', '2024-06-06', '2024-06-09', 'Business Trip', 1, 'C002', 'R002'),
+('B003', '2024-06-03', '2024-06-07', '2024-06-12', 'Vacation', 3, 'C003', 'R007'),
+('B004', '2024-06-04', '2024-06-08', '2024-06-11', 'Family Stay', 4, 'C004', 'R009'),
+('B005', '2024-06-05', '2024-06-09', '2024-06-13', 'Conference', 1, 'C005', 'R003');
 
 
 
