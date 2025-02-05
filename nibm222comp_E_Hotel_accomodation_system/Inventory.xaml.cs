@@ -270,69 +270,69 @@ namespace nibm222comp_E_Hotel_accomodation_system
 
         private void btn_update_item_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    sqlcon.Open();
+            try
+            {
+                sqlcon.Open();
 
-            //    // Retrieve user input
-            //    string inventoryId = txtUpdateInventoryId.Text;
-            //    string roomNumber = txtUpdateRoomNumber.Text;
-            //    string inventoryName = txtUpdateInventoryName.Text;
-            //    string inventoryType = (cmbUpdateInventoryType.SelectedItem as ComboBoxItem)?.Content.ToString();
+                // Retrieve user input
+                string inventoryId = txtUpdateInventoryId.Text;
+                string roomNumber = txtUpdateRoomNumber.Text;
+                string inventoryName = txtUpdateInventoryName.Text;
+                string inventoryType = (cmbUpdateInventoryType.SelectedItem as ComboBoxItem)?.Content.ToString();
 
-            //    int quantity = 0;
-            //    if (cmbUpdateQuantity.SelectedItem is ComboBoxItem selectedItem)
-            //    {
-            //        int.TryParse(selectedItem.Content.ToString(), out quantity);
-            //    }
+                int quantity = 0;
+                if (cmbUpdateQuantity.SelectedItem is ComboBoxItem selectedItem)
+                {
+                    int.TryParse(selectedItem.Content.ToString(), out quantity);
+                }
 
-            //    // Validation
-            //    if (string.IsNullOrEmpty(inventoryId) || string.IsNullOrEmpty(roomNumber) ||
-            //        string.IsNullOrEmpty(inventoryName) || string.IsNullOrEmpty(inventoryType))
-            //    {
-            //        MessageBox.Show("Please fill all fields", "Update Inventory", MessageBoxButton.OK, MessageBoxImage.Error);
-            //        return;
-            //    }
+                // Validation
+                if (string.IsNullOrEmpty(inventoryId) || string.IsNullOrEmpty(roomNumber) ||
+                    string.IsNullOrEmpty(inventoryName) || string.IsNullOrEmpty(inventoryType))
+                {
+                    MessageBox.Show("Please fill all fields", "Update Inventory", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
-            //    // SQL query to update data
-            //    string query = "UPDATE Inventory SET RoomID = @RoomID, InventoryName = @InventoryName, InventoryType = @InventoryType, Quantity = @Quantity, UpdatedDate = @UpdatedDate WHERE InventoryID = @InventoryID";
+                // SQL query to update data
+                string query = "UPDATE Inventory SET RoomID = @RoomID, InventoryName = @InventoryName, InventoryType = @InventoryType, Quantity = @Quantity, UpdatedDate = @UpdatedDate WHERE InventoryID = @InventoryID";
 
-            //    SqlCommand sqlCmd = new SqlCommand(query, sqlcon);
+                SqlCommand sqlCmd = new SqlCommand(query, sqlcon);
 
-            //    // Add parameters
-            //    sqlCmd.Parameters.AddWithValue("@InventoryID", inventoryId);
-            //    sqlCmd.Parameters.AddWithValue("@RoomID", roomNumber);
-            //    sqlCmd.Parameters.AddWithValue("@InventoryName", inventoryName);
-            //    sqlCmd.Parameters.AddWithValue("@InventoryType", inventoryType);
-            //    sqlCmd.Parameters.AddWithValue("@Quantity", quantity);
-            //    sqlCmd.Parameters.AddWithValue("@UpdatedDate", DateTime.Now);
+                // Add parameters
+                sqlCmd.Parameters.AddWithValue("@InventoryID", inventoryId);
+                sqlCmd.Parameters.AddWithValue("@RoomID", roomNumber);
+                sqlCmd.Parameters.AddWithValue("@InventoryName", inventoryName);
+                sqlCmd.Parameters.AddWithValue("@InventoryType", inventoryType);
+                sqlCmd.Parameters.AddWithValue("@Quantity", quantity);
+                sqlCmd.Parameters.AddWithValue("@UpdatedDate", DateTime.Now);
 
-            //    // Execute the query
-            //    int rowsAffected = sqlCmd.ExecuteNonQuery();
+                // Execute the query
+                int rowsAffected = sqlCmd.ExecuteNonQuery();
 
-            //    // Confirm success
-            //    if (rowsAffected > 0)
-            //    {
-            //        MessageBox.Show("Inventory details updated successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            //        clearUpdateFields(); // Clear fields after update
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Failed to update inventory details", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    }
-            //}
-            //catch (SqlException ex)
-            //{
-            //    MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-            //finally
-            //{
-            //    sqlcon.Close();
-            //}
+                // Confirm success
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Inventory details updated successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    clearUpdateFields(); // Clear fields after update
+                }
+                else
+                {
+                    MessageBox.Show("Failed to update inventory details", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                sqlcon.Close();
+            }
         }
 
         private void clearUpdateFields()
