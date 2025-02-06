@@ -21,6 +21,8 @@
     <None Remove="Expand Arrow.png" />
     <None Remove="Group 28.png" />
     <None Remove="Mainwindow image%27.png" />
+    <None Remove="Manager.png" />
+    <None Remove="Neighbor.png" />
     <None Remove="Performance Macbook.png" />
     <None Remove="RIVER GREEN Hotel Accomodation System.png" />
     <None Remove="RIVER GREEN Hotel Accomodation System12.png" />
@@ -47,6 +49,8 @@
     <Resource Include="Expand Arrow.png" />
     <Resource Include="Group 28.png" />
     <Resource Include="Mainwindow image'.png" />
+    <Resource Include="Manager.png" />
+    <Resource Include="Neighbor.png" />
     <Resource Include="Performance Macbook.png" />
     <Resource Include="RIVER GREEN Hotel Accomodation System.png" />
     <Resource Include="RIVER GREEN Hotel Accomodation System12.png" />
