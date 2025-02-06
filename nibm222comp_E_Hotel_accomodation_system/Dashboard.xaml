@@ -35,7 +35,11 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.ColumnSpan="2">
-                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" FontFamily="Century Gothic" FontSize="14" Foreground="White" BorderBrush="Transparent" Background="Transparent" FontWeight="Bold">
+                <ListView x:Name="MenuListView" SelectionMode="Single" 
+          ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+          FontFamily="Century Gothic" FontSize="14" Foreground="White" 
+          BorderBrush="Transparent" Background="Transparent" 
+          FontWeight="Bold" SelectionChanged="MenuListView_SelectionChanged">
                     <ListViewItem x:Name="profile" Height="55" Width="203" MouseDoubleClick="profile_MouseDoubleClick">
                         <ListViewItem.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -48,7 +52,7 @@
                             <TextBlock Margin="15 0 0 0" VerticalAlignment="Center" FontFamily="Bahnschrift SemiLight" FontWeight="Bold" Text="Profile" Width="62" Foreground="Black"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem x:Name="dashboard" Height="55" Background="#FF4464D4" MouseDoubleClick="dashboard_MouseDoubleClick">
+                    <ListViewItem x:Name="dashboard" Height="55" Background="#FF4464D4" MouseDoubleClick="dashboard_MouseDoubleClick" Tag="/wPerformance Macbook.png">
                         <StackPanel Width="177" HorizontalAlignment="Left" Orientation="Horizontal" Height="50" Margin="17,0,0,0">
                             <Image Source="/Performance Macbook.png" Height="35" Width="35" VerticalAlignment="Center"/>
                             <TextBlock Margin="15 0 0 0" VerticalAlignment="Center" FontFamily="Bahnschrift SemiLight" FontWeight="Normal" Text="Dashbaord" Width="85" Foreground="White"/>
@@ -68,7 +72,7 @@
                             </LinearGradientBrush>
                         </ListViewItem.Background>
                         <StackPanel Width="177" HorizontalAlignment="Center" Orientation="Horizontal" Height="50" Margin="14,0,0,0">
-                            <Image Source="/Customer.png" Height="35" Width="35" VerticalAlignment="Center"/>
+                            <Image Source="/Manager.png" Height="35" Width="35" VerticalAlignment="Center"/>
                             <TextBlock Margin="15 0 0 0" VerticalAlignment="Center" FontFamily="Bahnschrift SemiLight" FontWeight="Bold" Text="Employee Details" Width="109" Foreground="Black"/>
                         </StackPanel>
                     </ListViewItem>
@@ -110,7 +114,7 @@
                             </LinearGradientBrush>
                         </ListViewItem.Background>
                         <StackPanel Width="177" HorizontalAlignment="Center" Orientation="Horizontal" Height="50" Margin="16,0,0,0">
-                            <Image Source="/Country House - Copy.png" Height="35" Width="35" VerticalAlignment="Center"/>
+                            <Image Source="/Neighbor.png" Height="35" Width="35" VerticalAlignment="Center"/>
                             <TextBlock Margin="15 0 0 0" VerticalAlignment="Center" FontFamily="Bahnschrift SemiLight" FontWeight="Normal" Text="Reserve Room" Width="100" Foreground="Black"/>
                         </StackPanel>
                     </ListViewItem>

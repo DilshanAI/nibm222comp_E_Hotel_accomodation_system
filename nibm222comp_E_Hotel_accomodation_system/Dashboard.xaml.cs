@@ -19,6 +19,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
     /// </summary>
     public partial class Dashboard : Window
     {
+       
         public Dashboard()
         {
             InitializeComponent();
@@ -102,5 +103,12 @@ namespace nibm222comp_E_Hotel_accomodation_system
             // Close the current Dashboard window
             this.Close();
         }
+
+        private void MenuListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+       
     }
 }

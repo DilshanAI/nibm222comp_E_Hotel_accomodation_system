@@ -36,21 +36,21 @@
                         <TextBlock Text="Booking ID" FontWeight="Bold" FontSize="14" FontFamily="Segoe UI Semibold" Margin="5,15,0,0"/>
                         <TextBox x:Name="txt_bookingid" IsReadOnly="True" FontSize="14" Height="28" Margin="-34,13,0,0" Width="328"/>
 
-                        <TextBlock Text="Room Type" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,19,0,0"/>
+                        <TextBlock Text="Checkin Date" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,19,0,0"/>
+
+                        <TextBlock Text="Checkout Date" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,23,0,0"/>
+
+
+                        <TextBlock Text="Room Type" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,23,0,0"/>
+
 
                         <TextBlock Text="Bed Type" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,23,0,0"/>
 
 
-                        <TextBlock Text="Room ID" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,23,0,0"/>
+                        <TextBlock Text="Room ID" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,22,0,0"/>
 
 
-                        <TextBlock Text="No Of Persons" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,23,0,0"/>
-
-
-                        <TextBlock Text="Checkin Date" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,22,0,0"/>
-
-
-                        <TextBlock Text="Checkout Date" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,22,0,0"/>
+                        <TextBlock Text="No of People" FontWeight="Bold" FontFamily="Segoe UI Semibold" FontSize="14" Margin="5,22,0,0"/>
 
                     </StackPanel>
 
@@ -58,10 +58,12 @@
                     <StackPanel Grid.Column="0" Margin="170,10,20,10">
 
 
+                        <DatePicker x:Name="dp_reservedate" FontSize="14" Height="28" Margin="-30,94,0,0" Width="190" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="dp_reservedate_SelectedDateChanged"/>
+                        <DatePicker x:Name="dp_checkdate" Height="28" FontSize="14" Margin="-30,13,0,0" Width="190" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="dp_checkdate_SelectedDateChanged"/>
 
 
 
-                        <ComboBox Name="cmbRoomtype" Height="28" FontSize="14" Margin="-30,94,0,0" Width="190" SelectionChanged="cmbRoomtype_SelectionChanged">
+                        <ComboBox Name="cmbRoomtype" Height="28" FontSize="14" Margin="-30,13,0,0" Width="190" SelectionChanged="cmbRoomtype_SelectionChanged">
                             <ComboBox.Background>
                                 <LinearGradientBrush EndPoint="0,1">
                                     <GradientStop Color="#FFF0F0F0"/>
@@ -93,8 +95,6 @@
 
                         </ComboBox>
 
-                        <DatePicker x:Name="dp_reservedate" FontSize="14" Height="28" Margin="-30,13,0,0" Width="190" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="dp_reservedate_SelectedDateChanged"/>
-                        <DatePicker x:Name="dp_checkdate" Height="28" FontSize="14" Margin="-30,13,0,0" Width="190" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="dp_checkdate_SelectedDateChanged"/>
 
                     </StackPanel>
                     <!-- Right Side -->
