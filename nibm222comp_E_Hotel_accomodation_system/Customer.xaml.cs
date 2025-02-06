@@ -18,6 +18,7 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace nibm222comp_E_Hotel_accomodation_system
 {
@@ -109,6 +110,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
             {
                 sqlcon.Close();
             }
+            LoadCustomerDetails();
         }
 
         private void clearFiled()
@@ -136,9 +138,9 @@ namespace nibm222comp_E_Hotel_accomodation_system
             try
             {
                 sqlcon.Open(); 
-                string customerquery = "SELECT COUNT(1) FROM Customer WHERE CustomeRID = @CustomeRID";
+                string customerquery = "SELECT COUNT(1) FROM Customer WHERE CustomerID = @CustomerID";
                 SqlCommand checkCmd = new SqlCommand(customerquery, sqlcon);
-                checkCmd.Parameters.AddWithValue("@CustomeRID", updateCustomerID);
+                checkCmd.Parameters.AddWithValue("@CustomerID", updateCustomerID);
 
                 int exists = Convert.ToInt32(checkCmd.ExecuteScalar());
 
@@ -147,9 +149,28 @@ namespace nibm222comp_E_Hotel_accomodation_system
                     MessageBox.Show("Customer ID does not exist.", "Update Customer", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
+                if (!IsValidNIC(updateNIC))
+                {
+                    MessageBox.Show("Invalid NIC. Enter either 10-digit (old format) or 12-digit (new format).", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
-                string updateQuery = "UPDATE Customer SET CusName = @CusName, C_Address = @C_Address, Cus_Tele = @Cus_Tele,  CusNic = @CusNic, Cemail = @Cemail,  UpdateDate = @UpdateDate WHERE CustomeRID = @CustomeRID";
+                // Validate Mobile format
+                if (!IsValidMobile(updateMobile))
+                {
+                    MessageBox.Show("Invalid Mobile Number. It should be a 10-digit number starting with '07'.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Validate Email format
+                if (!IsValidEmail(updateEmail))
+                {
+                    MessageBox.Show("Invalid Email format. Please enter a valid email address.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                string updateQuery = "UPDATE Customer SET CusName = @CusName, C_Address = @C_Address, Cus_Tele = @Cus_Tele,  CusNic = @CusNic, Cemail = @Cemail,  UpdateDate = @UpdateDate WHERE CustomerID = @CustomerID";
                 SqlCommand updateCmd = new SqlCommand(updateQuery, sqlcon);
+                updateCmd.Parameters.AddWithValue("@CustomerID", updateCustomerID);
                 updateCmd.Parameters.AddWithValue("@CusName", updateName);
                 updateCmd.Parameters.AddWithValue("@C_Address", updateAddress);
                 updateCmd.Parameters.AddWithValue("@Cus_Tele", updateMobile);
@@ -182,6 +203,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
             {
                 sqlcon.Close();
             }
+            LoadCustomerDetails();
         }
         private void ClearUpdateFields()
         {
@@ -226,7 +248,31 @@ namespace nibm222comp_E_Hotel_accomodation_system
                         MessageBox.Show("Customer ID is already available. Please use a different Customer ID.", "Customer Details", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
+                    if (!IsValidCustomerId(customerId))
+                    {
+                        MessageBox.Show("Invalid Customer ID. It should be in 'CXXX' format (e.g., C123).", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    // Validate NIC format
+                    if (!IsValidNIC(nic))
+                    {
+                        MessageBox.Show("Invalid NIC. Enter either 10-digit (old format) or 12-digit (new format).", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
 
+                    // Validate Mobile format
+                    if (!IsValidMobile(mobile))
+                    {
+                        MessageBox.Show("Invalid Mobile Number. It should be a 10-digit number starting with '07'.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Validate Email format
+                    if (!IsValidEmail(email))
+                    {
+                        MessageBox.Show("Invalid Email format. Please enter a valid email address.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
                     string query = "INSERT INTO Customer (CustomeRID, CusName, Cus_Tele, CusNic, C_Address, Cemail,CreateDate,UpdateDate) VALUES (@CustomeRID, @CusName, @Cus_Tele, @CusNic, @C_Address,@Cemail,@CreateDate,@UpdateDate)";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlcon);
 
@@ -264,6 +310,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
             {
                 sqlcon.Close();
             }
+            LoadCustomerDetails();
         }
 
         private void Searchcustomer2_Click(object sender, RoutedEventArgs e)
@@ -314,6 +361,36 @@ namespace nibm222comp_E_Hotel_accomodation_system
             finally
             {
                 sqlcon.Close();
+            }
+            LoadCustomerDetails();
+        }
+        private bool IsValidCustomerId(string employeeId)
+        {
+            Regex regex = new Regex(@"^C\d{3}$");
+            return regex.IsMatch(employeeId);
+        }
+
+        private bool IsValidNIC(string nic)
+        {
+            Regex regex = new Regex(@"^\d{9}[VvXx]$|^\d{12}$");
+            return regex.IsMatch(nic);
+        }
+
+        private bool IsValidMobile(string mobile)
+        {
+            Regex regex = new Regex(@"^07\d{8}$");
+            return regex.IsMatch(mobile);
+        }
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
