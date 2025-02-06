@@ -130,7 +130,6 @@
                             <DataGridTextColumn Header="NIC" Binding="{Binding CusNic}" Width="*" />
                             <DataGridTextColumn Header="Address" Binding="{Binding C_Address}" Width="*" />
                             <DataGridTextColumn Header="Email" Binding="{Binding Cemail}" Width="*" />
-                            <DataGridTextColumn Header="Birth Of Date" Binding="{Binding BirthOfDate}" Width="*" />
                             <DataGridTextColumn Header="Create Date" Binding="{Binding CreateDate}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
