@@ -20,7 +20,9 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
+                  
+                        <Button x:Name="Btn_back" Content="&lt;&lt; Back" HorizontalAlignment="Left" Height="27" Margin="754,37,0,0" VerticalAlignment="Top" Width="69" Click="Btn_back_Click" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Segoe UI Semibold" FontSize="14"/>
+                    
                     <!--<Button x:Name="EmployeeDetails" Content=" << " Width="52" Height="30" Background="White" Foreground="Black"
                         FontWeight="Bold" BorderThickness="0" HorizontalAlignment="Left" Margin="0,2,0,58"  FontSize="25" Click="EmployeeDetails_Click"/>-->
                     <TextBlock Text="Employee Details" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI" 

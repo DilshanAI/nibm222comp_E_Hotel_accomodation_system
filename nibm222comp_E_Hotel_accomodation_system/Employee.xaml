@@ -141,6 +141,8 @@
                     
                     <TextBlock Text="Employee Details" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI" 
                       VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,10" />
+                    <Button x:Name="Btn_viewemployee" Content="View Employee" Width="110" Height="21" Background="#66F533BF" 
+        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="291,7,0,0" BorderThickness="0" FontFamily="Segoe UI Semibold" Click="Btn_viewemployee_Click"/>
                     <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,50,0,10">
                         <TextBox x:Name="txtSearchEmployee" Width="260" Height="30" Margin="0,0,10,0" 
                      FontSize="14" BorderBrush="#D1D1D1" BorderThickness="1" />
