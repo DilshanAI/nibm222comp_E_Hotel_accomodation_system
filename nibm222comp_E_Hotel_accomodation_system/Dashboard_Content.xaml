@@ -82,7 +82,7 @@
 
 
 
-                <DataGrid Name="dgBookingDetails" AutoGenerateColumns="False" Margin="43,10,94,39" Width="932" Height="280">
+                <DataGrid Name="dgBookingDetails" AutoGenerateColumns="False" Margin="43,10,94,39" Width="932" Height="224">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Booking ID" Binding="{Binding ReID}" Width="90" />
                         <DataGridTextColumn Header="Booking Date" Binding="{Binding Re_date}" Width="130" />

@@ -29,7 +29,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
         public InventoryDetails()
         {
             InitializeComponent();
-            //LoadInventoryDetails();
+            LoadInventoryDetails();
         }
         //Load inventory details to datagrid
         private void LoadInventoryDetails()
