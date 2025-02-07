@@ -24,6 +24,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
     /// </summary>
     public partial class ReserveRoom : UserControl
     {
+        private string customerName = "";
 
         SqlConnection sqlcon = new SqlConnection(Connection.ConnectionString);
         public ReserveRoom()
@@ -107,12 +108,18 @@ namespace nibm222comp_E_Hotel_accomodation_system
             // Get the values from the UI controls
             string customerId = txt_cusid.Text; // Customer ID from txt_cusid
             string roomId = cmbroomno.SelectedItem.ToString(); // Room ID from cmbroomno
-            DateTime reservationDate = dp_reservedate.SelectedDate.Value; // Reservation date from dp_reservedate
+           // string customerName = "Pavithra Kotugala";
+            string mobile = "0769946668";
+            string roomType = cmbRoomtype.Text + "/" + cmbBedtype.Text;
+            DateTime reservationDate = DateTime.Now;
+
             DateTime checkInDate = dp_reservedate.SelectedDate.Value; // Check-in date from dp_reservedate
             DateTime checkOutDate = dp_checkdate.SelectedDate.Value; // Check-out date from dp_checkdate
             string remarks = txt_remarks.Text; // Remarks from txt_remarks (assuming this exists)
             int numberOfPersons = Convert.ToInt32(((ComboBoxItem)cmbQuantity.SelectedItem).Content.ToString());
 
+            string price = txt_price.Text;
+            
             string bookingId = txt_bookingid.Text; // Booking ID from txt_bookingid
 
             try
@@ -136,8 +143,11 @@ namespace nibm222comp_E_Hotel_accomodation_system
                 // Execute the query
                 cmd.ExecuteNonQuery();
 
-                MessageBox.Show("Reservation saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+             //   MessageBox.Show("Reservation saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                // Show confirmation pop-up
+        ConfirmationWindow confirmation = new ConfirmationWindow(bookingId, customerName, mobile, roomType, numberOfPersons, reservationDate, checkInDate, checkOutDate, price);
+                confirmation.ShowDialog(); // Open as modal window
                 // Optionally, clear the form or reset fields after saving
                 ClearForm();
             }
@@ -351,13 +361,33 @@ namespace nibm222comp_E_Hotel_accomodation_system
 
         private void dp_reservedate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            ReloadRooms();
-           
+            if (dp_reservedate.SelectedDate.HasValue && dp_checkdate.SelectedDate.HasValue)
+            {
+                if (dp_checkdate.SelectedDate.Value >= dp_reservedate.SelectedDate.Value)
+                {
+                    ReloadRooms();
+                }
+                else
+                {
+                    MessageBox.Show("Check-out date must be after the check-in date.", "Invalid Dates", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+
         }
 
         private void dp_checkdate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            ReloadRooms();
+            if (dp_reservedate.SelectedDate.HasValue && dp_checkdate.SelectedDate.HasValue)
+            {
+                if (dp_checkdate.SelectedDate.Value >= dp_reservedate.SelectedDate.Value)
+                {
+                    ReloadRooms();
+                }
+                else
+                {
+                    MessageBox.Show("Check-out date must be after the check-in date.", "Invalid Dates", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
 
         }
 
@@ -460,20 +490,19 @@ namespace nibm222comp_E_Hotel_accomodation_system
             {
                 sqlcon.Open();
 
-                // Query to fetch CustomerID based on the mobile number
-                SqlCommand cmd = new SqlCommand("SELECT CustomerID FROM Customer WHERE Cus_Tele = @MobileNumber", sqlcon);
+                // Query to fetch CustomerID and CusName based on the mobile number
+                SqlCommand cmd = new SqlCommand("SELECT CustomerID, CusName FROM Customer WHERE Cus_Tele = @MobileNumber", sqlcon);
                 cmd.Parameters.AddWithValue("@MobileNumber", mobileNumber);
 
-                object result = cmd.ExecuteScalar(); // Execute the query and fetch the result
+                SqlDataReader reader = cmd.ExecuteReader(); // Execute the query
 
-                if (result != null)
+                if (reader.Read()) // Check if data is found
                 {
-                    txt_cusid.Text = result.ToString(); // Set the customer ID in txt_cusid
+                    txt_cusid.Text = reader["CustomerID"].ToString(); // Set Customer ID
+                    customerName = reader["CusName"].ToString(); // Store Customer Name in variable
                 }
-                else
-                {
-                   // txt_cusid.Text = "Not Found"; // If no customer found, show a message or leave it empty
-                }
+
+                reader.Close(); // Close the reader
             }
             catch (Exception ex)
             {
