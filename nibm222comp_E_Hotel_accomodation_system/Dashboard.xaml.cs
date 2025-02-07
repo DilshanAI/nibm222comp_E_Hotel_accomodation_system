@@ -44,7 +44,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
 
         private void employees_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ContentArea.Content = new Employee();
+            LoadEmployeePage();
         }
 
         private void inventories_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -61,7 +61,15 @@ namespace nibm222comp_E_Hotel_accomodation_system
 
             ContentArea.Content = inventoryPage;
         }
+        private void LoadEmployeePage()
+        {
+            Employee employeePage = new Employee();
 
+            // Subscribe to the event for navigating to InventoryDetails.xaml
+            employeePage.NavigateToEmployeeDetails += LoadEmployeeDetailsPage;
+
+            ContentArea.Content = employeePage;
+        }
         private void LoadInventoryDetailsPage()
         {
             InventoryDetails detailsPage = new InventoryDetails();
@@ -71,7 +79,15 @@ namespace nibm222comp_E_Hotel_accomodation_system
 
             ContentArea.Content = detailsPage;
         }
+        private void LoadEmployeeDetailsPage()
+        {
+            EmployeeDetails detailsPage = new EmployeeDetails();
 
+            // Subscribe to event to go back to Inventory.xaml
+            detailsPage.NavigateBackToEmployee += LoadEmployeePage;
+
+            ContentArea.Content = detailsPage;
+        }
         private void reports_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ContentArea.Content = new Reports();

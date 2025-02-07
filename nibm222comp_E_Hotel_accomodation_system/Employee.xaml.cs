@@ -26,6 +26,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
     /// </summary>
     public partial class Employee : UserControl
     {
+        public event Action NavigateToEmployeeDetails;
         SqlConnection sqlcon = new SqlConnection(Connection.ConnectionString);
         string selectedRoomType = "0";
         string selectedBedType = "0";
@@ -218,63 +219,79 @@ namespace nibm222comp_E_Hotel_accomodation_system
             string updateMobile = txtUpdatemobile.Text.Trim();
             string updateNIC = txtUpdatenic.Text.Trim();
             string updateEmail = txtUpdateemail.Text.Trim();
-            //string updateDesignation = designationComboBox.Text.Trim();
-            string updateDesignation = (designationComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
 
+            // Ensure a selection is made before accessing the combo box item
+            string updateDesignation = designationComboBox.SelectedItem != null
+                ? (designationComboBox.SelectedItem as ComboBoxItem)?.Content.ToString()
+                : string.Empty;
+
+            // Validate Employee ID
             if (string.IsNullOrWhiteSpace(updateEmpID))
             {
                 MessageBox.Show("Please enter an Employee ID.", "Update Employee", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
+            // Ensure the database connection is properly initialized
+            if (sqlcon == null)
+            {
+                MessageBox.Show("Database connection is not initialized.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             try
             {
-                sqlcon.Open();
+                if (sqlcon.State != ConnectionState.Open)
+                    sqlcon.Open();
 
-                // Check if EmployeeID exists
+                // Check if Employee ID exists
                 string empquery = "SELECT COUNT(1) FROM Employee WHERE EmployeeID = @EmployeeID";
-                SqlCommand checkCmd = new SqlCommand(empquery, sqlcon);
-                checkCmd.Parameters.AddWithValue("@EmployeeID", updateEmpID);
-
-                int exists = Convert.ToInt32(checkCmd.ExecuteScalar());
-
-                if (exists == 0)
+                using (SqlCommand checkCmd = new SqlCommand(empquery, sqlcon))
                 {
-                    MessageBox.Show("Employee ID does not exist.", "Update Employee", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
+                    checkCmd.Parameters.AddWithValue("@EmployeeID", updateEmpID);
+                    object result = checkCmd.ExecuteScalar();
+                    int exists = result != null ? Convert.ToInt32(result) : 0;
+
+                    if (exists == 0)
+                    {
+                        MessageBox.Show("Employee ID does not exist.", "Update Employee", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
                 }
 
-                // Corrected UPDATE query with properly mapped parameters
+                // Update Employee Details
                 string updateQuery = @"UPDATE Employee 
-                          SET Name = @Name, 
-                              Mobile = @Mobile, 
-                              NIC = @NIC,  
-                              Address = @Address, 
-                              Email = @Email, 
-                              UpdateDate = @UpdateDate, 
-                              Designation = @Designation 
-                          WHERE EmployeeID = @EmployeeID";
+                               SET Name = @Name, 
+                                   Mobile = @Mobile, 
+                                   NIC = @NIC, 
+                                   Address = @Address, 
+                                   Email = @Email, 
+                                   UpdateDate = @UpdateDate, 
+                                   Designation = @Designation 
+                               WHERE EmployeeID = @EmployeeID";
 
-                SqlCommand updateCmd = new SqlCommand(updateQuery, sqlcon);
-                updateCmd.Parameters.AddWithValue("@Name", updateName);
-                updateCmd.Parameters.AddWithValue("@Mobile", updateMobile);
-                updateCmd.Parameters.AddWithValue("@NIC", updateNIC);
-                updateCmd.Parameters.AddWithValue("@Address", updateAddress);
-                updateCmd.Parameters.AddWithValue("@Email", updateEmail);
-                updateCmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
-                updateCmd.Parameters.AddWithValue("@Designation", updateDesignation);
-                updateCmd.Parameters.AddWithValue("@EmployeeID", updateEmpID); // Missing in original
-
-                int rowsAffected = updateCmd.ExecuteNonQuery();
-
-                if (rowsAffected > 0)
+                using (SqlCommand updateCmd = new SqlCommand(updateQuery, sqlcon))
                 {
-                    MessageBox.Show("Employee details updated successfully.", "Update Employee", MessageBoxButton.OK, MessageBoxImage.Information);
-                    ClearUpdateFields();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to update employee details.", "Update Employee", MessageBoxButton.OK, MessageBoxImage.Error);
+                    updateCmd.Parameters.AddWithValue("@Name", updateName);
+                    updateCmd.Parameters.AddWithValue("@Mobile", updateMobile);
+                    updateCmd.Parameters.AddWithValue("@NIC", updateNIC);
+                    updateCmd.Parameters.AddWithValue("@Address", updateAddress);
+                    updateCmd.Parameters.AddWithValue("@Email", updateEmail);
+                    updateCmd.Parameters.AddWithValue("@UpdateDate", DateTime.Now);
+                    updateCmd.Parameters.AddWithValue("@Designation", updateDesignation);
+                    updateCmd.Parameters.AddWithValue("@EmployeeID", updateEmpID);
+
+                    int rowsAffected = updateCmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Employee details updated successfully.", "Update Employee", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ClearUpdateFields();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to update employee details.", "Update Employee", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             catch (SqlException ex)
@@ -290,17 +307,20 @@ namespace nibm222comp_E_Hotel_accomodation_system
                 if (sqlcon.State == ConnectionState.Open)
                     sqlcon.Close();
             }
-        }
-        private void ClearUpdateFields()
-        {
-            txtUpdateName.Text = "";
-            txtUpdateAddress.Text = "";
-            txtUpdatemobile.Text = "";
-            txtUpdatenic.Text = "";
-            txtUpdateemail.Text = "";
-            designationComboBox.Text = "";
+            LoadEmployeeDetails();
         }
 
+        // Clears the input fields after successful update
+        private void ClearUpdateFields()
+        {
+            txtUpdateEmpId.Clear();
+            txtUpdateName.Clear();
+            txtUpdateAddress.Clear();
+            txtUpdatemobile.Clear();
+            txtUpdatenic.Clear();
+            txtUpdateemail.Clear();
+            designationComboBox.SelectedIndex = -1; // Reset combo box selection
+        }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             string EmployeeID = txtUpdateEmpId.Text.Trim();
@@ -323,9 +343,9 @@ namespace nibm222comp_E_Hotel_accomodation_system
                 if (reader.Read())
                 {
                     txtUpdateName.Text = reader["Name"].ToString();
-                    txtUpdateAddress.Text = reader["Mobile"].ToString();
-                    txtUpdatemobile.Text = reader["NIC"].ToString();
-                    txtUpdatenic.Text = reader["Address"].ToString();
+                    txtUpdateAddress.Text = reader["Address"].ToString();
+                    txtUpdatemobile.Text = reader["Mobile"].ToString();
+                    txtUpdatenic.Text = reader["NIC"].ToString();
                     txtUpdateemail.Text = reader["Email"].ToString();
                     //designationComboBox.SelectedValue = reader["Designation"].ToString();
                     string designation = reader["Designation"].ToString();
@@ -415,6 +435,11 @@ namespace nibm222comp_E_Hotel_accomodation_system
         private void employeedetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void Btn_viewemployee_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToEmployeeDetails?.Invoke();
         }
     }
 }

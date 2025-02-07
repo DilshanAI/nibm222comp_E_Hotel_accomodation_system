@@ -26,6 +26,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
     /// </summary>
     public partial class EmployeeDetails : UserControl
     {
+        public event Action NavigateBackToEmployee;
         SqlConnection sqlcon = new SqlConnection(Connection.ConnectionString);
         string selectedRoomType = "0";
         string selectedBedType = "0";
@@ -114,6 +115,11 @@ namespace nibm222comp_E_Hotel_accomodation_system
             {
                 sqlcon.Close();
             }
+        }
+
+        private void Btn_back_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateBackToEmployee?.Invoke();
         }
     }
 }
