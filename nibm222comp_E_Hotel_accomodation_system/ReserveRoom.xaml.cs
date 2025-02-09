@@ -16,6 +16,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Text.RegularExpressions;
+using System.Net.Mail;
+using System.Net;
 
 namespace nibm222comp_E_Hotel_accomodation_system
 {
@@ -98,7 +100,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
         private void btn_sumbit_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(txt_cusid.Text) || string.IsNullOrEmpty(cmbroomno.Text) ||
-    string.IsNullOrEmpty(cmbQuantity.Text) || dp_reservedate.SelectedDate == null || dp_checkdate.SelectedDate == null)
+          string.IsNullOrEmpty(cmbQuantity.Text) || dp_reservedate.SelectedDate == null || dp_checkdate.SelectedDate == null)
             {
                 MessageBox.Show("Please fill in all the required fields.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -121,7 +123,12 @@ namespace nibm222comp_E_Hotel_accomodation_system
             string price = txt_price.Text;
             
             string bookingId = txt_bookingid.Text; // Booking ID from txt_bookingid
-
+            string customerEmail = GetCustomerEmail(customerId, sqlcon);
+            if (string.IsNullOrEmpty(customerEmail))
+            {
+                MessageBox.Show("Customer email not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             try
             {
                 sqlcon.Open();
@@ -143,10 +150,23 @@ namespace nibm222comp_E_Hotel_accomodation_system
                 // Execute the query
                 cmd.ExecuteNonQuery();
 
-             //   MessageBox.Show("Reservation saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                string emailBody = $"Dear Customer,\n\n" +
+                          $"Your room has been allocated successfully.\n\n" +
+                          $"Booking ID: {bookingId}\n" +
+                          $"Check-in Date: {checkInDate:yyyy-MM-dd}\n" +
+                          $"Check-out Date: {checkOutDate:yyyy-MM-dd}\n" +
+                          $"Room Type: {roomType}\n" +
+                          $"Room ID: {roomId}\n" +
+                          $"Total Price: {price}\n\n" +
+                          $"Thank you for choosing our hotel.\n\n" +
+                          $"Best Regards,\nHotel Management";
+
+                SendEmail(customerEmail, "Room Allocation Confirmation", emailBody);
+                MessageBox.Show("Room allocated successfully! Email sent to customer.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                //   MessageBox.Show("Reservation saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // Show confirmation pop-up
-        ConfirmationWindow confirmation = new ConfirmationWindow(bookingId, customerName, mobile, roomType, numberOfPersons, reservationDate, checkInDate, checkOutDate, price);
+                ConfirmationWindow confirmation = new ConfirmationWindow(bookingId, customerName, mobile, roomType, numberOfPersons, reservationDate, checkInDate, checkOutDate, price);
                 confirmation.ShowDialog(); // Open as modal window
                 // Optionally, clear the form or reset fields after saving
                 ClearForm();
@@ -165,8 +185,35 @@ namespace nibm222comp_E_Hotel_accomodation_system
                 clear();
             }
         }
+        private void SendEmail(string toEmail, string subject, string body)
+        {
+            try
+            {
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    Credentials = new NetworkCredential("rivergreenhotelpd@gmail.com", "rivergreen345@#$"), 
+                    EnableSsl = true
+                };
 
-        private void clear()
+                MailMessage mailMessage = new MailMessage
+                {
+                    From = new MailAddress("rivergreenhotelpd@gmail.com"), 
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = false
+                };
+
+                mailMessage.To.Add(toEmail);
+                client.Send(mailMessage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to send email: " + ex.Message);
+            }
+        }
+    
+
+private void clear()
         {
             // Clear text fields
             txt_mobile.Text = "";
@@ -436,6 +483,34 @@ namespace nibm222comp_E_Hotel_accomodation_system
                     MessageBox.Show("Check-out date must be after the check-in date.", "Invalid Dates", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
+        }
+        private string GetCustomerEmail(string customerID, SqlConnection sqlcon)
+        {
+            string email = null;
+            string query = "SELECT Cemail FROM Customer WHERE CustomerID = @CustomerID";
+
+            // Open the connection if it is not already open
+            if (sqlcon.State != System.Data.ConnectionState.Open)
+            {
+                sqlcon.Open();
+            }
+
+            using (SqlCommand cmd = new SqlCommand(query, sqlcon))
+            {
+                cmd.Parameters.AddWithValue("@CustomerID", customerID);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    email = reader["Cemail"].ToString();
+                }
+                reader.Close();
+            }
+
+            // Optionally, close the connection after the operation
+            sqlcon.Close();
+
+            return email;
         }
 
         private decimal GetRoomPrice(string roomID)
