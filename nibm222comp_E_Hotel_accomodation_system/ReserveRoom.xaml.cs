@@ -110,8 +110,8 @@ namespace nibm222comp_E_Hotel_accomodation_system
             // Get the values from the UI controls
             string customerId = txt_cusid.Text; // Customer ID from txt_cusid
             string roomId = cmbroomno.SelectedItem.ToString(); // Room ID from cmbroomno
-           // string customerName = "Pavithra Kotugala";
-            string mobile = "0769946668";
+                                                               // string customerName = "Pavithra Kotugala";
+            string mobile = txt_mobile.Text;
             string roomType = cmbRoomtype.Text + "/" + cmbBedtype.Text;
             DateTime reservationDate = DateTime.Now;
 
@@ -162,7 +162,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
                           $"Best Regards,\nHotel Management";
 
                 SendEmail(customerEmail, "Room Allocation Confirmation", emailBody);
-                MessageBox.Show("Room allocated successfully! Email sent to customer.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+    //            MessageBox.Show("Room allocated successfully! Email sent to customer.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 //   MessageBox.Show("Reservation saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // Show confirmation pop-up
@@ -191,7 +191,7 @@ namespace nibm222comp_E_Hotel_accomodation_system
             {
                 SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
                 {
-                    Credentials = new NetworkCredential("rivergreenhotelpd@gmail.com", "rivergreen345@#$"), 
+                    Credentials = new NetworkCredential("rivergreenhotelpd@gmail.com", "tael pmms ytdx wnwu"), 
                     EnableSsl = true
                 };
 
